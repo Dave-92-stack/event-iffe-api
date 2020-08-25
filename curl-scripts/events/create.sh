@@ -4,17 +4,16 @@ API="http://localhost:4741"
 URL_PATH="/events"
 
 curl "${API}${URL_PATH}" \
---include \
---request POST \
---header "Authorization: Bearer ${TOKEN}" \
---header "Content-Type: application/json" \
---data '{
+  --include \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer ${TOKEN}" \
+  --data '{
   "event": {
     "title": "'"${TITLE}"'",
-    "edition": "'"${DESCRIPTION}"'",
+    "description": "'"${DESCRIPTION}"'",
     "date": "'"${DATE}"'"
     }
-  }
-}'
+  }'
 
 echo
