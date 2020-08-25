@@ -42,5 +42,27 @@ router.post('/events', requireToken, (req, res, next) => {
 router.patch('/events/:id', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.event.owner
 
-  
+  Event.findById(req.params.id)
+    .then(handle404)
+    .then(event => {
+      requireOwnership(req, event)
+      return event.updateOne(req.body.event)
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
 })
+
+// DESTROY
+
+router.delete('/events/:id', requireToken, (req, res, next) => {
+  Event.findById(req.params.id)
+    .then(handle404)
+    .then(event => {
+      requireOwnership(req, event)
+      event.deleteOne()
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})
+
+module.exports = router
