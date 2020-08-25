@@ -1,6 +1,6 @@
 const express = require('express')
 const passport = require('passport')
-const Event = require('../models/event')
+const Events = require('../models/event')
 const errors = require('../../lib/custom_errors')
 const removeBlanks = require('../../lib/remove_blank_fields')
 
@@ -11,7 +11,7 @@ const router = express.Router()
 
 // INDEX
 router.get('/events', requireToken, (req, res, next) => {
-  Event.find()
+  Events.find()
     .then(events => {
       return events.map(event => event.toObject())
     })
@@ -20,8 +20,8 @@ router.get('/events', requireToken, (req, res, next) => {
 })
 
 // SHOW
-router.get('events/:id', requireToken, (req, res, next) => {
-  Event.findById(req.params.id)
+router.get('/events/:id', requireToken, (req, res, next) => {
+  Events.findById(req.params.id)
     .then(handle404)
     .then(event => res.status(200).json({ event: event.toObject() }))
     .catch(next)
@@ -31,7 +31,7 @@ router.get('events/:id', requireToken, (req, res, next) => {
 router.post('/events', requireToken, (req, res, next) => {
   req.body.event.owner = req.user.id
 
-  Event.create(req.body.event)
+  Events.create(req.body.event)
     .then(event => {
       res.status(201).json()({ event: event.toObject() })
     })
@@ -42,7 +42,7 @@ router.post('/events', requireToken, (req, res, next) => {
 router.patch('/events/:id', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.event.owner
 
-  Event.findById(req.params.id)
+  Events.findById(req.params.id)
     .then(handle404)
     .then(event => {
       requireOwnership(req, event)
@@ -55,7 +55,7 @@ router.patch('/events/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 
 router.delete('/events/:id', requireToken, (req, res, next) => {
-  Event.findById(req.params.id)
+  Events.findById(req.params.id)
     .then(handle404)
     .then(event => {
       requireOwnership(req, event)

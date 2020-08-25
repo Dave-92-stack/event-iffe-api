@@ -1,7 +1,7 @@
 #!/bin/bash
 
 API="http://localhost:4741"
-URL_PATH="/events"
+URL_PATH="/event"
 
 curl "${API}${URL_PATH}" \
   --include \
