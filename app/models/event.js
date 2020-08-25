@@ -13,14 +13,6 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  rsvp: {
-    type: Boolean,
-    required: true
-  },
-  // comment: {
-  // type: Data,
-  // required: true
-  // },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
