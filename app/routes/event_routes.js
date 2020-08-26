@@ -1,6 +1,7 @@
 const express = require('express')
 const passport = require('passport')
 const Event = require('../models/event')
+const RSVP = require('../models/rsvp')
 const errors = require('../../lib/custom_errors')
 const removeBlanks = require('../../lib/remove_blank_fields')
 
@@ -8,6 +9,36 @@ const handle404 = errors.handle404
 const requireOwnership = errors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
+
+// rsvp route to RSVP to an event
+// INDEX
+router.post('/events/:id/rsvp', requireToken, (req, res, next) => {
+  // Temporary variable to be used later in the chain
+  let createdRSVP
+  // create the actually rsvp = where owner == is the user.
+  // NOTE: this needs to be an object. Before you were trying to create an rsvp as just an object ID but that will not work.
+  RSVP.create({ owner: req.user.id })
+    .then(rsvp => {
+      // store the created rsvp in a variable
+      createdRSVP = rsvp
+      // return the .findById call to return the promise to the next .then
+      return Event.findById(req.params.id)
+    })
+    .then(event => { // this is the found event
+      // Add the createdRSVP to the event we just found and push the ._id
+      event.rsvps.push(createdRSVP._id)
+      return event.save()
+      // your code here
+      // return & save the event
+      // your code here
+    })
+    .then(event => { // this is the saved event
+      // return a json response as the FINAL step in the chain
+      console.log(event)
+      res.status(201).json({ createdRSVP: createdRSVP.toObject })
+    })
+    .catch(next)
+})
 
 // INDEX
 router.get('/events', requireToken, (req, res, next) => {
