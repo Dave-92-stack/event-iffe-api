@@ -33,7 +33,8 @@ router.post('/events', requireToken, (req, res, next) => {
 
   Event.create(req.body.event)
     .then(event => {
-      res.status(201).json()({ event: event.toObject() })
+      res.status(201).json({ event: event.toObject() })
+      //res.status(201).json({ snippet: snippet.toObject() })
     })
     .catch(next)
 })
