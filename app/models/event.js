@@ -22,7 +22,6 @@ const eventSchema = new mongoose.Schema({
   rsvps: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'RSVP',
-    required: true
   }]
 }, {
   timestamps: true
