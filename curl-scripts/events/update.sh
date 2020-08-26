@@ -10,7 +10,7 @@ curl "${API}${URL_PATH}/${ID}" \
 --header "Authorization: Bearer ${TOKEN}" \
 --data '{
   "event": {
-    "title": "'"${TEXT}"'",
+    "title": "'"${TITLE}"'",
     "description": "'"${DESCRIPTION}"'",
     "date": "'"${DATE}"'"
   }
