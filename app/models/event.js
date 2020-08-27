@@ -10,8 +10,8 @@ const eventSchema = new mongoose.Schema({
     required: true
   },
   date: {
-    type: Date,
-    required: true
+    type: String,
+    required: false
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

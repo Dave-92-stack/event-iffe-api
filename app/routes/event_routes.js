@@ -10,7 +10,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-router.get('/events', requireToken, (req, res, next) => {
+router.get('/events', (req, res, next) => {
   Events.find()
     .then(events => {
       return events.map(event => event.toObject())
