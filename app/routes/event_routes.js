@@ -41,7 +41,9 @@ router.post('/events', requireToken, (req, res, next) => {
 
 // UPDATE
 router.patch('/events/:id', requireToken, removeBlanks, (req, res, next) => {
-  delete req.body.event.owner
+  
+  req.body.event.owner = req.user.id
+  console.log(req.body)
 
   Events.findById(req.params.id)
     .then(handle404)

@@ -22,4 +22,8 @@ const eventSchema = new mongoose.Schema({
   timestamps: true
 })
 
+eventSchema.virtual('prettyDate').get(() => {
+return moment(this.date).fromat('MMM Do YY')
+})
+
 module.exports = mongoose.model('Events', eventSchema)
