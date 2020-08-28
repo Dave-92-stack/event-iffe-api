@@ -9,6 +9,15 @@ const requireOwnership = errors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
+router.post('/userevents', (req, res, next) => {
+  Events.find({ owner: req.body.ownerEvent })
+    .then(events => {
+      return events.map(event => event.toObject())
+    })
+    .then(events => res.status(200).json({ events: events }))
+    .catch(next)
+})
+
 // INDEX
 router.get('/events', (req, res, next) => {
   Events.find()
