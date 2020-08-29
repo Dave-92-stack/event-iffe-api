@@ -3,7 +3,7 @@ const passport = require('passport')
 const Events = require('../models/event')
 const errors = require('../../lib/custom_errors')
 const removeBlanks = require('../../lib/remove_blank_fields')
-
+const RSVP = require('../models/rsvp')
 const handle404 = errors.handle404
 const requireOwnership = errors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
