@@ -10,8 +10,8 @@ const eventSchema = new mongoose.Schema({
     required: true
   },
   date: {
-    type: Date,
-    required: true
+    type: String,
+    required: false
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -20,11 +20,15 @@ const eventSchema = new mongoose.Schema({
   },
   // one to many - one event has many rsvp's
   rsvps: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     ref: 'RSVP',
   }]
 }, {
   timestamps: true
 })
 
-module.exports = mongoose.model('Event', eventSchema)
+eventSchema.virtual('prettyDate').get(() => {
+  return moment(this.date).fromat('MMM Do YY')
+})
+
+module.exports = mongoose.model('Events', eventSchema)

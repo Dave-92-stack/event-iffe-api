@@ -1,10 +1,9 @@
 const express = require('express')
 const passport = require('passport')
-const Event = require('../models/event')
-const RSVP = require('../models/rsvp')
+const Events = require('../models/event')
 const errors = require('../../lib/custom_errors')
 const removeBlanks = require('../../lib/remove_blank_fields')
-
+const RSVP = require('../models/rsvp')
 const handle404 = errors.handle404
 const requireOwnership = errors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
@@ -40,9 +39,18 @@ router.post('/events/:id/rsvp', requireToken, (req, res, next) => {
     .catch(next)
 })
 
+router.post('/userevents', (req, res, next) => {
+  Events.find({ owner: req.body.ownerEvent })
+    .then(events => {
+      return events.map(event => event.toObject())
+    })
+    .then(events => res.status(200).json({ events: events }))
+    .catch(next)
+})
+
 // INDEX
-router.get('/events', requireToken, (req, res, next) => {
-  Event.find()
+router.get('/events', (req, res, next) => {
+  Events.find()
     .then(events => {
       return events.map(event => event.toObject())
     })
@@ -51,8 +59,8 @@ router.get('/events', requireToken, (req, res, next) => {
 })
 
 // SHOW
-router.get('events/:id', requireToken, (req, res, next) => {
-  Event.findById(req.params.id)
+router.get('/events/:id', requireToken, (req, res, next) => {
+  Events.findById(req.params.id)
     .then(handle404)
     .then(event => res.status(200).json({ event: event.toObject() }))
     .catch(next)
@@ -62,7 +70,7 @@ router.get('events/:id', requireToken, (req, res, next) => {
 router.post('/events', requireToken, (req, res, next) => {
   req.body.event.owner = req.user.id
 
-  Event.create(req.body.event)
+  Events.create(req.body.event)
     .then(event => {
       res.status(201).json({ event: event.toObject() })
       //res.status(201).json({ snippet: snippet.toObject() })
@@ -72,9 +80,11 @@ router.post('/events', requireToken, (req, res, next) => {
 
 // UPDATE
 router.patch('/events/:id', requireToken, removeBlanks, (req, res, next) => {
-  delete req.body.event.owner
 
-  Event.findById(req.params.id)
+  req.body.event.owner = req.user.id
+  console.log(req.body)
+
+  Events.findById(req.params.id)
     .then(handle404)
     .then(event => {
       requireOwnership(req, event)
@@ -87,7 +97,7 @@ router.patch('/events/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 
 router.delete('/events/:id', requireToken, (req, res, next) => {
-  Event.findById(req.params.id)
+  Events.findById(req.params.id)
     .then(handle404)
     .then(event => {
       requireOwnership(req, event)

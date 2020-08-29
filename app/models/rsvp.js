@@ -11,3 +11,5 @@ const rsvpSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('RSVP', rsvpSchema)
+
+
