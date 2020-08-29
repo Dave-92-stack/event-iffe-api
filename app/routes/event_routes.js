@@ -11,7 +11,7 @@ const router = express.Router()
 
 // rsvp route to RSVP to an event
 // INDEX
-router.post('/events/rsvp', requireToken, (req, res, next) => {
+router.post('/events/:id/rsvp', requireToken, (req, res, next) => {
   // Temporary variable to be used later in the chain
   console.log(req)
   let createdRSVP

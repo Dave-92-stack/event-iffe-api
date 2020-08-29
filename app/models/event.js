@@ -17,13 +17,18 @@ const eventSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
+  // one to many - one event has many rsvp's
+  rsvps: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'RSVP',
+  }]
 }, {
   timestamps: true
 })
 
 eventSchema.virtual('prettyDate').get(() => {
-return moment(this.date).fromat('MMM Do YY')
+  return moment(this.date).fromat('MMM Do YY')
 })
 
 module.exports = mongoose.model('Events', eventSchema)
