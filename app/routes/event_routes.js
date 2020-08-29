@@ -13,7 +13,7 @@ const router = express.Router()
 // INDEX
 router.post('/events/:id/rsvp', requireToken, (req, res, next) => {
   // Temporary variable to be used later in the chain
-  console.log(req)
+  console.log(req.body)
   let createdRSVP
   // create the actually rsvp = where owner == is the user.
   // NOTE: this needs to be an object. Before you were trying to create an rsvp as just an object ID but that will not work.
@@ -27,7 +27,10 @@ router.post('/events/:id/rsvp', requireToken, (req, res, next) => {
     .then(event => { // this is the found event
       console.log(event)
       // Add the createdRSVP to the event we just found and push the ._id
-      event.rsvps.push(createdRSVP._id)
+      event.rsvps.push({
+        rsvpID : createdRSVP._id,
+        ...req.body
+      })
       return event.save()
       // your code here
       // return & save the event
