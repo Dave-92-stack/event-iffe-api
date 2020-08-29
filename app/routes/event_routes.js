@@ -22,9 +22,10 @@ router.post('/events/rsvp', requireToken, (req, res, next) => {
       // store the created rsvp in a variable
       createdRSVP = rsvp
       // return the .findById call to return the promise to the next .then
-      return Event.findById(req.params.id)
+      return Events.findById(req.params.id)
     })
     .then(event => { // this is the found event
+      console.log(event)
       // Add the createdRSVP to the event we just found and push the ._id
       event.rsvps.push(createdRSVP._id)
       return event.save()
