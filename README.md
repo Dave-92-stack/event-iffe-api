@@ -1,4 +1,4 @@
-# Feeling IFFI Events
+# Events R Us
 
 This application allows the users to create, edit, delete and view snippets of code.
 This API stores the information about an user and its respective resoures. It allows users to create, update, view and delete snippets of their own resources.
