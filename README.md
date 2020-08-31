@@ -8,11 +8,11 @@ This application allow the users to create, edit, delete, RSVP and view events. 
 ## Important Links
 - [Feeling-IFFI Client Repo](https://github.com/Feeling-IFFE/event-iffe-client)
 - [Feeling-IFFI  API Repo](https://github.com/Feeling-IFFE/event-iffe-api)
-- [Deployed-Feeling IFFI API](#)
-- [Deployed-Feeling IFFI Client Application](#)
+- [Deployed-Feeling IFFI API](https://safe-escarpment-74500.herokuapp.com)
+- [Deployed-Feeling IFFI Client Application](https://feeling-iffe.github.io/event-iffe-client/)
 
 ## API URL
-    production: '<heroku url>',
+    production: 'https://safe-escarpment-74500.herokuapp.com',
     development: 'http://localhost:4741'
 
 ## API End Points
@@ -23,11 +23,15 @@ This application allow the users to create, edit, delete, RSVP and view events. 
 | POST   | `/sign-in`             | `users#signin`    |
 | DELETE | `/sign-out`            | `users#signout`   |
 | PATCH  | `/change-password`     | `users#changepw`  |
-| GET    | `/events`              | `events#index`  |
-| POST   | `/events`              | `events#create` |
-| GET    | `/events/:id`          | `events#show`   |
-| DELETE | `/events/:id`          | `events#delete` |
-| PATCH  | `/events/:id`          | `events#update` |
+| GET    | `/events`              | `events#index`    |
+| POST   | `/event`               | `event#create`    |
+| GET    | `/events/:id`          | `events#show`     |
+| DELETE | `/events/:id`          | `events#delete`   |
+| PATCH  | `/events/:id`          | `events#update`   |
+| GET    | `/userevents`          | `userevents#show` |
+| PATCH  | `/events/:id`          | `events#update`   |
+| POST   | `/events/:id/rsvp`     | `rsvp#create`     |
+
 
 All data returned from API actions is formatted as JSON.
 
@@ -46,17 +50,12 @@ The resource for the application is events. The user will be able to create even
 - Ajax
 - JSON
 - Node.JS
-- Express
 - Passport
 
 ## Planning Store
 
 
 This application came to life after expending time looking at different websites and ways of communication. Since it is a group project, we decided to create something that people can create events and invite others to these events. This application will allow users to create, edit, view, and delete events and give the possibilities to RSVP to events on the website.
-
-
-
-This application came to life after expending numerous hours on different websites, research lines of code on how to execute a specific task. It wouldn't be nice to have a place where you can store your own snippets and come back to it, whenever you want?! So, Snippets application is here to save the day. The application will allow users to create, edit, view, and delete snippets at code of their respective resources as long they are logged into the website.
 
 #### The process:
 This application uses authentication and allows users to create resources inside the website. During the process of development, several tools were used to bring this API to live. Ajax/Axios , Mongoose, Express, Passport, and more. The application contains a robust back-end with validations for the user accounts.
@@ -76,7 +75,7 @@ This application solves the problem of not having a place to host events and inv
 - As a user I want to RSVP a < resource > that others own.
 
 ## ORM Database
-![Image of ORM](https://i.imgur.com/Sjf4bc3.png)
+![Image of Database](https://i.imgur.com/gFKClZG.png)
 
 ## Disclaimer
 
