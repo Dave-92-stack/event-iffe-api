@@ -21,7 +21,11 @@ const eventSchema = new mongoose.Schema({
   // one to many - one event has many rsvp's
   rsvps: [{
     type: mongoose.Schema.Types.Mixed,
-    ref: 'RSVP',
+    ref: 'RSVP'
+  }],
+  uploads: [{
+    type: mongoose.Schema.Types.Mixed,
+    ref: 'Upload'
   }]
 }, {
   timestamps: true
