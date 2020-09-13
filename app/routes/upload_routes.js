@@ -21,16 +21,9 @@ router.post('uploads', requireToken, upload.single('upload'), (req, res, next) =
     .catch(next)
 })
 
-router.get('/uploads/:id', requireToken, upload.single('upload:id'), (req, res, next) => {
-  console.log(req.file)
-  s3Upload(req.file)
-    .then(awsFile => {
-      console.log(awsFile)
-      return Upload.findById({ url: awsFile.Location })
-    })
-    .then(uploadDoc => {
-      res.status(201).json({ upload: uploadDoc })
-    })
+router.get('/uploads/:filename', requireToken, (req, res, next) => {
+  Upload.findById(req.params.id)
+    .then(uploadDoc => res.status(201).json({ upload: uploadDoc }))
     .catch(next)
 })
 
