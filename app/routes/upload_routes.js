@@ -9,7 +9,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 const s3Upload = require('../../lib/s3_upload')
 
-router.post('uploads', requireToken, upload.single('upload'), (req, res, next) => {
+router.post('/uploads', requireToken, upload.single('upload'), (req, res, next) => {
   console.log(req.file)
   s3Upload(req.file)
     .then(awsFile => {
