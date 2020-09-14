@@ -22,8 +22,11 @@ router.post('/uploads', requireToken, upload.single('upload'), (req, res, next) 
 })
 
 router.get('/uploads/:filename', requireToken, (req, res, next) => {
-  Upload.findById(req.params.id)
-    .then(uploadDoc => res.status(201).json({ upload: uploadDoc }))
+  Upload.find(req.params.id)
+    .then(upload => {
+      return upload.map(upload => upload.toObject())
+    })
+    .then(upload => res.status(201).json({ upload: upload }))
     .catch(next)
 })
 
