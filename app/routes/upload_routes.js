@@ -21,8 +21,8 @@ router.post('/uploads', requireToken, upload.single('upload'), (req, res, next) 
     .catch(next)
 })
 
-router.get('/uploads/:filename', requireToken, (req, res, next) => {
-  Upload.find(req.params.id)
+router.get('/uploads/:id', requireToken, (req, res, next) => {
+  Upload.find({ id: req.params.id })
     .then(upload => {
       return upload.map(upload => upload.toObject())
     })
